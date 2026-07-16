@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#03050d" />
+  <meta name="description" content="Canım ablama, yeni başlangıcı için küçük bir mektup." />
+  <title>Canım Ablama</title>
+  <style>
+    :root{
+      --ink:#f7f1e7;
+      --muted:#c7c4d7;
+      --gold:#f6d58b;
+      --rose:#e7a6b7;
+      --night:#02040b;
+      --deep:#080d22;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      overflow-x:hidden;
+      color:var(--ink);
+      font-family:Georgia,"Times New Roman",serif;
+      background:var(--night);
+    }
+    .scene{
+      position:relative;
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      isolation:isolate;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 72% 22%, rgba(111,137,255,.22), transparent 22%),
+        radial-gradient(circle at 22% 18%, rgba(105,74,160,.17), transparent 24%),
+        radial-gradient(circle at 50% 115%, rgba(24,38,82,.7), transparent 43%),
+        linear-gradient(180deg,#02040b 0%,#060a18 55%,#10162b 100%);
+    }
+    .nebula{
+      position:absolute; inset:-15%; z-index:-5; opacity:.55; filter:blur(24px);
+      background:
+        radial-gradient(ellipse at 76% 23%,rgba(91,111,213,.28),transparent 27%),
+        radial-gradient(ellipse at 32% 24%,rgba(121,73,153,.21),transparent 31%),
+        radial-gradient(ellipse at 56% 44%,rgba(42,75,143,.15),transparent 28%);
+      animation:breathe 10s ease-in-out infinite alternate;
+    }
+    .stars,.stars::before,.stars::after{content:"";position:absolute;inset:0;pointer-events:none}
+    .stars{z-index:-4;background-image:radial-gradient(circle,#fff 0 1.2px,transparent 1.8px),radial-gradient(circle,#dfe6ff 0 1px,transparent 1.6px);background-size:91px 91px,143px 143px;background-position:7px 13px,61px 31px;opacity:.86}
+    .stars::before{background-image:radial-gradient(circle,#fff8da 0 1.8px,rgba(255,248,218,.22) 2.8px,transparent 5px),radial-gradient(circle,#fff 0 1.3px,transparent 2px);background-size:267px 267px,337px 337px;background-position:28px 80px,141px 17px;animation:twinkle 3.8s ease-in-out infinite alternate}
+    .stars::after{background-image:radial-gradient(circle,#fff 0 2.2px,rgba(255,255,255,.2) 3.2px,transparent 7px);background-size:421px 421px;background-position:82px 44px;animation:twinkle 5.5s ease-in-out infinite alternate-reverse}
+    .north-star{position:absolute;right:16%;top:15%;width:5px;height:5px;border-radius:50%;background:white;box-shadow:0 0 10px 3px #fff,0 0 32px 10px rgba(246,213,139,.75),0 0 75px 24px rgba(116,149,255,.25);animation:pulse 2.5s ease-in-out infinite;z-index:-2}
+    .north-star::before,.north-star::after{content:"";position:absolute;left:50%;top:50%;background:linear-gradient(90deg,transparent,#fff,transparent);transform:translate(-50%,-50%)}
+    .north-star::before{width:62px;height:1px}.north-star::after{width:1px;height:62px;background:linear-gradient(180deg,transparent,#fff,transparent)}
+    .shooting{position:absolute;top:13%;left:66%;width:180px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),#fff);transform:rotate(-28deg);filter:drop-shadow(0 0 7px #fff);opacity:0;animation:shoot 10s ease-in-out infinite}
+    .mountains{position:absolute;left:-5%;right:-5%;bottom:-2px;height:34%;z-index:-2;background:linear-gradient(155deg,transparent 0 31%,#0a0d18 31.3% 44%,transparent 44.3%),linear-gradient(25deg,transparent 0 27%,#0a0d18 27.3% 46%,transparent 46.3%),linear-gradient(150deg,transparent 0 44%,#05070d 44.3% 63%,transparent 63.3%),linear-gradient(30deg,transparent 0 39%,#05070d 39.3% 67%,transparent 67.3%)}
+    .ground{position:absolute;left:-10%;right:-10%;bottom:-8%;height:24%;z-index:-1;border-radius:50% 50% 0 0/100% 100% 0 0;background:radial-gradient(ellipse at 50% 0%,#14192a 0,#090b12 47%,#030408 75%);box-shadow:0 -20px 80px rgba(33,47,92,.18)}
+    .figure{position:absolute;left:14%;bottom:9%;width:96px;height:215px;z-index:0;filter:drop-shadow(0 8px 20px rgba(0,0,0,.8))}
+    .head{position:absolute;left:34px;top:0;width:34px;height:37px;border-radius:48% 52% 46% 54%;background:#020307}
+    .hair{position:absolute;left:25px;top:3px;width:50px;height:68px;border-radius:50% 50% 42% 58%;background:#020307;transform:rotate(-8deg)}
+    .body{position:absolute;left:22px;top:35px;width:57px;height:113px;border-radius:34px 34px 12px 12px;background:linear-gradient(180deg,#060811,#020307);transform:skew(-2deg)}
+    .skirt{position:absolute;left:6px;top:113px;width:89px;height:88px;clip-path:polygon(29% 0,72% 0,100% 100%,0 100%);background:#020307}
+    .arm{position:absolute;left:70px;top:54px;width:12px;height:83px;border-radius:10px;background:#020307;transform:rotate(-19deg);transform-origin:top}
+    .content{width:min(1120px,100%);min-height:100svh;padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:minmax(260px,.78fr) minmax(420px,1.25fr);align-items:center;gap:clamp(40px,7vw,110px);position:relative;z-index:2}
+    .intro{align-self:end;padding-bottom:11vh;text-shadow:0 3px 24px rgba(0,0,0,.7)}
+    .intro .small{font-size:.74rem;text-transform:uppercase;letter-spacing:.34em;color:var(--rose);margin-bottom:16px}
+    .intro h1{font-size:clamp(2.7rem,6vw,5.7rem);font-weight:400;line-height:.94;letter-spacing:-.045em;margin:0 0 22px}
+    .intro p{max-width:350px;color:var(--muted);font-size:1rem;line-height:1.7;margin:0}
+    .letter{justify-self:end;width:min(640px,100%);padding:clamp(28px,5vw,58px);border:1px solid rgba(255,255,255,.14);border-radius:30px;background:linear-gradient(145deg,rgba(10,14,31,.76),rgba(8,10,22,.52));box-shadow:0 35px 100px rgba(0,0,0,.46),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(18px);position:relative;overflow:hidden}
+    .letter::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 12%,rgba(246,213,139,.09),transparent 25%),linear-gradient(125deg,rgba(255,255,255,.035),transparent 35%);pointer-events:none}
+    .letter::after{content:"✦";position:absolute;right:28px;top:20px;color:var(--gold);font-size:1.1rem;text-shadow:0 0 18px rgba(246,213,139,.9);animation:twinkle 2.6s ease-in-out infinite alternate}
+    .salutation{font-size:clamp(1.8rem,4vw,2.8rem);margin:0 0 26px;font-weight:400}
+    blockquote{margin:0 0 28px;padding:0 0 24px;border-bottom:1px solid rgba(246,213,139,.26);font-size:clamp(1.15rem,2.4vw,1.52rem);line-height:1.6;font-style:italic;color:#fff9eb}
+    blockquote span{display:block;margin-top:8px;color:var(--gold);font-size:.85rem;font-style:normal;letter-spacing:.16em}
+    .copy{font-size:clamp(1rem,1.7vw,1.16rem);line-height:1.9;color:#e9e6ee}
+    .copy p{margin:0 0 18px}.copy p:last-child{margin-bottom:0}
+    .last{color:#fff8e8;font-size:1.08em}
+    .signature{margin-top:30px;color:var(--rose);font-size:1.2rem;font-style:italic;line-height:1.8}
+    .signature strong{display:block;color:var(--ink);font-size:1.45rem;font-weight:400}
+    @keyframes twinkle{from{opacity:.35}to{opacity:1}}
+    @keyframes pulse{50%{transform:scale(1.35);filter:brightness(1.25)}}
+    @keyframes breathe{to{transform:scale(1.05) translate3d(1.5%,-1%,0)}}
+    @keyframes shoot{0%,72%,100%{opacity:0;transform:translate(0,0) rotate(-28deg)}75%{opacity:1}84%{opacity:0;transform:translate(-520px,300px) rotate(-28deg)}}
+    @media(max-width:850px){
+      .content{grid-template-columns:1fr;align-content:center;padding-top:90px;padding-bottom:100px}
+      .intro{align-self:auto;padding:0 0 10px;text-align:center}.intro p{margin-inline:auto}.intro h1{font-size:clamp(2.9rem,13vw,5rem)}
+      .letter{justify-self:center}.figure{left:2%;bottom:5%;transform:scale(.72);transform-origin:bottom left;opacity:.72}.north-star{right:12%;top:10%}.mountains{height:27%}
+    }
+    @media(max-width:520px){.scene{place-items:start center}.content{padding:70px 18px 120px;gap:28px}.intro .small{font-size:.62rem}.intro p{display:none}.letter{border-radius:24px;padding:30px 24px}.figure{opacity:.5}.copy{line-height:1.75}.signature{margin-top:24px}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <main class="scene">
+    <div class="nebula"></div>
+    <div class="stars"></div>
+    <div class="north-star"></div>
+    <div class="shooting"></div>
+    <div class="mountains"></div>
+    <div class="ground"></div>
+    <div class="figure" aria-hidden="true"><div class="hair"></div><div class="head"></div><div class="body"></div><div class="arm"></div><div class="skirt"></div></div>
+
+    <div class="content">
+      <section class="intro" aria-label="Giriş">
+        <div class="small">Yeni bir başlangıca</div>
+        <h1>Gökyüzüne<br>bakmayı<br>unutma.</h1>
+        <p>Karanlığın içinden görünen yıldızlara ve onların gösterdiği yeni yollara...</p>
+      </section>
+
+      <article class="letter" aria-label="Canım ablama mektup">
+        <h2 class="salutation">Canım Ablam,</h2>
+        <blockquote>
+          Yıldızları görebilmek için bazen karanlıkta durmak gerekir.
+          <span>— FA</span>
+        </blockquote>
+        <div class="copy">
+          <p>Belki de bu yüzden bugün gökyüzü sana biraz daha yakın.</p>
+          <p>Bunu sonuna kadar hak ettin. Umarım yeni yolun sana huzur, güzel insanlar ve seni daha da büyütecek deneyimler getirir.</p>
+          <p class="last">Gökyüzüne bakmayı hiç bırakma. Çünkü yıldızlar ulaşmak için değil, yönünü bulmak içindir.</p>
+        </div>
+        <div class="signature">Seninle gurur duyuyorum.<br>Sevgiler,<strong>FA</strong></div>
+      </article>
+    </div>
+  </main>
+</body>
+</html>
